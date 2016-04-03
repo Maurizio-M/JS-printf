@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Stampa formattata</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script language="JavaScript" src="printf.js"></script>
+<style type="text/css">
+<!--
+.testo {  font-family: Arial, Helvetica, sans-serif; font-size: 14px}
+.tabx {  font: 14px/20px "Courier New", Courier, mono;}
+.esempio { font-family: "Courier New", Courier, mono; font-size: 14px; color: #000066; text-align: left}
+.dmx {  font-size: 3px; color: #330099}
+-->
+</style>
+</head>
+
+<body bgcolor="#FFFFFF">
+<table width="640" border="0" cellspacing="0" cellpadding="8" align="center">
+  <tr> 
+    <td style="text-align: center; font: bold 25px Arial, Helvetica, sans-serif; letter-spacing: 5px;"><div style="color: #CC6633; margin-bottom: 5px;">- printf -</div>
+<span style="font-size: 16px">by Maurizio Mauri</span><br>
+<span style="font-size: 12px; letter-spacing:0;">(<a style="color: #000; text-decoration:none" href="MaurizioMauri@email.com">MaurizioMauri@email.com</a>)</span></td>
+  </tr>
+  <tr> 
+    <td class="testo"><div align="justify">
+      Nel javascript manca una funzione che fornisca un output formattato, presente, 
+      invece in quasi tutti i linguaggi. Questa mancanza mette spesso in difficolt&agrave; 
+      gli utenti meno esperti quando devono creare un output formattatto di un semplice numero, ad esempio stampare un importo in euro, con due 
+      cifre decimali; ma anche buoni programmatori non trovano per niente agevole 
+      stampare numeri in formati poco usuali come quello esponenziale.<br>
+      <br>
+      <b><i>printf()</i></b> &egrave; una funzione che cerca di sopperire a questa 
+      mancanza, usando una sintassi simile a quella dell'omonima funzione del 
+      C, ma ormai presente in quasi tutti i linguaggi di programmazione.<br>
+      <br>
+      Ad esempio, osserviamo la tabella che segue:<br>
+      <br>
+      <table style="border: 1px solid #000; padding: 0; border-spacing:0; margin: auto">
+        <tr> 
+          <td> 
+            <script language="JavaScript">
+printf('<table width="300" border="0" cellspacing="0" cellpadding="0" align=center>');
+printf('<tr><td bgcolor="#e0e0ff" class="tabx" nowrap><pre><i><b>  n.      log(n)        exp(n)         12<sup>n</sup>  </i></b></td></tr>');
+printf('<tr><td class="tabx"><pre>')
+for (i = 1; i < 12; i++) {
+printf('  %02d    %8.5d    %10.4d    %5.4e  \n', i, Math.log(i), Math.exp(i), Math.pow(12, i));
+}
+printf('</td></tr></table>');
+</script>
+          </td>
+        </tr>
+      </table>
+      <br>
+      <br>
+      <div class="testo"> Nella prima colonna è riportato un numero fra 1 e 11; 
+        i numeri di una sola cifra sono fatti precedere da uno 0.<br>
+        Nella seconda vi &egrave; il logaritmo naturale del numero, formattato 
+        con 5 cifre decimali. Nella terza colonna vi &egrave; l'esponenziale del 
+        numero con 4 cifre decimali. Infine nell'ultima colonna vi &egrave; la 
+        potenza, in base 12, del numero, stampata in forma esponeziale e con 4 
+        cifre decimali.<br>
+        <br>
+        La tabella &egrave; stata costruita interamente da script con printf() 
+        con quest'unica l'istruzione:<br>
+        <dir class="esempio">for (i = 1; i < 12; i++) 
+          <dir>printf(' %02d %8.5d %10.4d %5.4e \n', i, Math.log(i),<br>
+            Math.exp(i), Math.pow(12, i));</dir>
+        </dir>
+        <b><br>
+        <br>
+        Sintassi</b><br>
+        <br>
+        La sintassi di printf() &egrave; la seguente:<br>
+        <dir class="esempio"> printf(&quot;stringa di formato&quot;, variabile1, 
+          variabile2, ...);</dir>
+ovvero, dovendo stampare <em><strong>n</strong></em> variabili, bisogna passare alla funzione <em><strong>n + 1</strong></em> parametri. Il primo parametro è la stringa di formato.<br>
+<br>
+        La stringa di formato pu&ograve; contenere qualsiasi carattere, oltre 
+        ai caratteri necessari a formattare i parametri seguenti. Ad esempio, 
+        con:<br>
+        <dir class=esempio> printf(&quot;Il risultato &amp;egrave;: %5.2d\n&quot;, 
+          result);</dir>
+        fornir&agrave; un output del tipo:<br>
+        <dir class=esempio>
+        Il risultato &egrave;: 132.54</dir>
+        viene, cio&egrave;, stampata la stringa di formato; quando viene incontrato 
+        il carattere &quot;%&quot;, al suo posto viene stampato il corrispondente 
+        parametro, secondo il formato specificato dopo il carattere.<br>
+        <br>
+        Il modello generale del formato &egrave; il seguente:<br>
+        <dir class=esempio> %[ + | - ] [ 0 ] [ n [ .m] ] X</dir>
+        I parametri fra parentesi sono opzionali.<br>
+        <br>
+        Il segno ( <b>+</b> o <b>-</b> ) definisce l'allineamento: con il segno 
+        + si ha l'allineamento a destra, con il - a sinistra. L'allineamento di 
+        default &egrave; a destra ( + ) . Il carattere &quot;|&quot; &egrave; 
+        l'OR (oppure) e sta a significare che i due segni non possono essere usati 
+        contemporaneamente. <br>
+        <br>
+        Lo &quot;<b>0</b>&quot; (zero) &egrave; il carattere di riempimento, utile 
+        per i campi numerici. Quando il numero occupa uno spazio minore di quello 
+        specificato nel formato, lo spazio rimanente viene riempito di spazi (default) 
+        oppure da zeri (se specificato). Ad esempio, la stringa di formato &quot;%03d&quot; (3 caratteri a disposizone, riempiti da uno <strong>0</strong>) applicata al numero <em>12</em> fornisce il risultato di <em>012</em>. <br>
+        <br>
+        Il numero <b>n</b> &egrave; il numero minimo di caratteri che devono essere 
+        riservati al parametro da stampare. Il numeri di caratteri utilizzati 
+        da un parametro potrebbe anche essere superiore ad n, se il parametro 
+        li richiede. Ad esempio:<br>
+        <dir class=esempio> x = 1000;<br>
+          printf(&quot;%2d&quot;, x);</dir>
+        occuper&agrave; 4 caratteri e non i 2 specificati nel formato.<br>
+        <br>
+        Il punto seguito da un numero &egrave; necessario solo per i numeri decimali; 
+        <b>m</b> rappresenta il numero di cifre da stampare dopo il punto decimale. 
+        Ad esempio: 
+        <dir class=esempio> x = 1000.346;<br>
+          printf(&quot;%6.2d&quot;, x);</dir>
+        stamper&agrave; il numero <em>1000.35</em>. Si faccia attenzione che <b>n</b> rappresenta 
+        il numero totale di caratteri riservati al parametro, compresi il punto 
+        decimale e l'eventuale segno. in questo caso sono stati stampati <em>7</em> caratteri invece di <em>6</em>. <br>
+        <br>
+        Infine <b>X</b> rappresenta il tipo di grandezza da stampare e pu&ograve; 
+        essere:</div>
+      <dir> 
+        <table width="10" border="0" cellspacing="0" cellpadding="4">
+          <tr> 
+            <td class="testo">c</td>
+            <td class="testo" nowrap> carattere </td>
+          </tr>
+          <tr> 
+            <td class="testo">d</td>
+            <td class="testo" nowrap>numero decimale </td>
+          </tr>
+          <tr> 
+            <td class="testo">x</td>
+            <td class="testo" nowrap>numero, che verr&agrave; stampato in formato 
+              esadecimale </td>
+          </tr>
+          <tr> 
+            <td class="testo">o</td>
+            <td class="testo" nowrap>numero, che verr&agrave; stampato in formato 
+              ottale. </td>
+          </tr>
+          <tr> 
+            <td class="testo">e</td>
+            <td class="testo" nowrap>numero, che verr&agrave; stampato in formato 
+              esponenziale</td>
+          </tr>
+          <tr> 
+            <td class="testo">s</td>
+            <td class="testo" nowrap>stringa</td>
+          </tr>
+        </table>
+      </dir>
+      <div class=testo> Il carattere pu&ograve; essere sia minuscolo che maiuscolo.<br>
+        <br>
+        Il carattere &quot;\n&quot; (new line) verr&agrave; convertito in &quot;&lt;BR&gt;&quot;.<br>
+        <br>
+        Per stampare i caratteri speciali (% e \) devono essere preceduti dal 
+        segno &quot;%&quot;. Quindi %% stamper&agrave; un semplice % e non verr&agrave; 
+        considerato l'inizio di un formato.<br>
+        <br>
+        Si tenga presente che, per avere effettivamente gli allineamenti desiderati, 
+        bisogna utilizzare i caratteri a spaziatura fissa.<br>
+        <br>
+        <br>
+        <br>
+        <b>Esempi</b><br>
+        <br>
+        Torniamo all'esempio della precedente tabella.<br>
+        <br>
+        Per stampare il numero preceduto dallo 0 se ha meno di 2 cifre &egrave; 
+        stata usata l'istruzione:<br>
+        <blockquote><span class="esempio"> printf(&quot;%02d&quot;, i);</span><br>
+        </blockquote>
+        Come si vede il primo argomento di printf &egrave; una stringa (stringa 
+        di formato) in cui %02d sta a significare che il numero successivo deve 
+        essere stampato occupando 2 caratteri. Lo 0 iniziale indica che, nel caso 
+        il numero occupi meno di 2 caratteri, il carattere mancante deve essere 
+        riempito con uno 0.<br>
+        <br>
+        La seconda colonna &egrave; stata stampata con:<br>
+        <blockquote> <span class="esempio">printf(&quot;%8.5d&quot;, Math.log(i));</span><br>
+        </blockquote>
+        che significa: il logaritmo deve essere stampato occupando in totale 8 
+        caratteri (compreso il punto decimale), di cui 5 per le cifre decimali. 
+        Il numero, in realt&agrave;, occuper&agrave; solo 7 caratteri; il carattere 
+        supplementare (uno spazio) verr&agrave; inserito all'inizio.<br>
+        <br>
+        La terza colonna &egrave; stata stampata con:<br>
+        <blockquote> <span class="esempio">printf(&quot;%10.4d&quot;, Math.exp(i));</span><br>
+        </blockquote>
+        dal significato analogo al precedente. Come si vede, per&ograve;, il numero 
+        viene allineato a destra, inserendo tanti spazi quanti sono necessari.<br>
+        <br>
+        L'ultima colonna &egrave; stata stampata con:<br>
+        <blockquote> <span class="esempio">printf(&quot;%5.4e&quot;, Math.pow(10, 
+          i));</span><br>
+        </blockquote>
+        la "e" nella stringa di formato impone, appunto, la stampa in formato 
+        esponenziale. L'esponente viene sempre stampato con il segno e tre caratteri 
+        eventualmente rimpiti con lo &quot;0&quot;. Il numero deve essere di almeno 
+        5 caratteri in totale, di cui 4 decimali. &Egrave; evidente che il numero 
+        non potr&agrave; occupare solo 5 caratteri; il numero verr&agrave; stampato 
+        senza spazi aggiuntivi per la formattazione.<br>
+        <br>
+        In questo ulteriore esempio viene stampato il codice HTML per costruire 
+        una tabella di nomi, allineando le stringhe a sinistra e i numeri a destra..<br>
+        <br>
+        <script language="JavaScript">
+var head = '<table border="1" cellspacing="0" cellpadding="8" align="center">';
+
+var riga = '<tr>' +
+    '<td class="tabx">%-10s</td>' +
+    '<td class="tabx">%-10s</td>' +
+    '<td class="tabx">Lire %d</td>' +
+    '<td class="tabx">&euro; %5.2d</td>' +
+  '</tr>';
+
+var foot = '</table>';
+
+var persone = new Array(
+	"Rossi", "Alberto", 18300,
+	"Bianchini", "Roberto", 32730,
+	"Franchi", "Giuseppe", 42750);
+
+printf(head);
+ for (var i = 0; i < persone.length; i += 3)
+	printf(riga, persone[i], persone[i + 1], persone[i + 2], persone[i + 2] / 1936.27);
+
+printf(foot);
+</script>
+        <br>
+        <br>
+        Ed &egrave; stato ottenuto con <br>
+        <dir class=esempio> var head = '&lt;table border="1" cellspacing="0" cellpadding="8" 
+          align="center"&gt;'; var riga = '&lt;tr&gt;' + 
+          <dir> '&lt;td class="tabx"&gt;%-10s&lt;/td&gt;' +<br>
+            '&lt;td class="tabx"&gt;%-10s&lt;/td&gt;' +<br>
+            '&lt;td class="tabx"&gt;Lire %d&lt;/td&gt;' +<br>
+            '&lt;td class="tabx"&gt;&amp;euro; %5.2d&lt;/td&gt;' + '&lt;/tr&gt;';<br>
+            <br>
+          </dir>
+          var foot = '&lt;/table&gt;'; var persone = new Array( 
+          <dir> "Rossi", "Alberto", 18300,<br>
+            "Bianchini", "Roberto", 32730,<br>
+            "Franchi", "Giuseppe", 42750);<br>
+            <br>
+          </dir>
+          printf(head);<br>
+          for (var i = 0; i &lt; persone.length; i += 3) 
+          <dir> printf(riga, persone[i], persone[i + 1],<br>
+            persone[i + 2], persone[i + 2] / 1936.27);</dir>
+          printf(foot);</dir>
+        <br>
+        Lo stesso elenco, con gli stessi allineamenti poteva essere fatto senza 
+        costruire la table:<br>
+        <br>
+<pre style="display:table; margin: auto; background-color: #F4F4FF">
+<script>
+for (var i = 0; i < persone.length; i += 3) {
+	printf("%-10s %-10s Lire: %5d&nbsp;\t%5.2d\n", persone[i], persone[i + 1], persone[i + 2], persone[i + 2] / 1936.27);
+}
+</script>
+</pre>        <br>
+        con il pi&ugrave; semplice script:<br>
+        <dir class=esempio>for (var i = 0; i < persone.length; i += 3)
+          <dir>printf("%-10s %-10s Lire: %5d\t&amp;euro; %5.2d\n", 
+            persone[i],<br>
+            persone[i + 1], persone[i + 2], persone[i + 2] / 1936.27);</dir>
+        </dir>
+        <br>
+<span style="float:right; display: inline-block;border:1px solid #000; background-color:#F4F4FF;padding:0 6px; margin: 0 6px;" class="tabx"> 
+<script>
+for (i = 10; i < 24; i += 2)
+	printf("%2d 0x%02x %03o\n", i, i, i);
+</script>
+</span>
+
+        Questo'altro esempio mette in evidenza la facilità con cui si possono 
+        fare le conversioni di formato:<br>
+        <br>
+        La tabella di destra riporta un numero decimale nella prima colonna, il 
+        corrispondente esadecimale nella seconda e l'ottale nella terza. È stata 
+        costruita soltanto con le istruzioni:<br>
+        <dir class="esempio">for (var i = 10; i < 24; i += 2) 
+          <dir> printf("%2d 0x%02x %03o\n", i, i, i);</dir>
+        </dir>
+        <br>
+        E infine, dulcis in fundo, il grafico di una sinusoide:<br>
+        <br>
+        <table border="1" cellspacing="0" cellpadding="2" bgcolor="#F4F4FF" align=center>
+          <tr> 
+            <td> 
+              <script language="JavaScript">
+	function f(x) {
+		return Math.sin(x * 4.5 * Math.PI / 180);
+	}
+
+	function graph(values, maxval, n) {
+	var bgcol = "#0000FF";
+	var row = '<table border="0" cellspacing="0" cellpadding="0"><tr>'
+		row += '<td class=dmx width=%d height=1>&nbsp;</td><td class=dmx width=1 height=1 bgcolor=%s>&nbsp;</td></tr></table>';
+	var wmax = 100;
+	var x;
+
+	printf('<table width="'+ 2 * wmax + '" border="0" cellspacing="0" cellpadding="0">');
+	for (var i = 0; i < n; i++) {
+		var x = wmax + values(i) * wmax / maxval;
+		printf('<tr><td>' + row + '</td></tr>', x, bgcol);
+	}
+	printf("</td></tr></table>");
+}
+		graph(f, 1, 80);
+	  </script>
+            </td>
+          </tr>
+        </table>
+        <br>
+        <br>
+        Senza addendrarci nei particolari, la parte centrale dello script &egrave;:<br>
+        <dir class=esempio>for (var i = 0; i < n; i++) {
+          <dir>var x = wmax + values(i) * wmax / maxval;<br>
+            printf('&lt;tr&gt;&lt;td&gt;' + row + '&lt;/td&gt;&lt;/tr&gt;', x, bgcol);</dir>
+          }</dir>
+        <br>
+      </div></div>
+    </td>
+  </tr>
+  <tr> 
+    <td align="center"><font face="Arial, Helvetica, sans-serif" size="4"><b>sprintf</b></font> 
+    </td>
+  </tr>
+  <tr> 
+    <td class="testo"><b><i>sprintf()</i></b> formatta una serie di parametri 
+      e memorizza il risultato in una stringa. Del tutto analoga a printf(), ha 
+      la seguente sintassi:<br>
+      <dir class="esempio">variabile = sprintf(&quot;stringa di formato&quot;, 
+        parametro1, parametro2, ...);</dir>
+    Ad esempio:<br>
+      <dir class=esempio> function linkIt(str, url, target) { 
+        <dir> return sprintf('&lt;a href=&quot;%s&quot; target=&quot;%s&quot;&gt;%s&lt;/a&gt;', 
+          url, target, str);        </dir>
+        }<br>
+        <br>
+        a = &quot;Clicca per continuare&quot;;<br>
+        a = linkIt(a, &quot;http://www.google.com&quot;, &quot;newwin&quot;);<br>
+      </dir>
+      <br>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
